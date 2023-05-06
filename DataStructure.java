@@ -19,7 +19,8 @@ public class DataStructure implements DT {
 			xHead = new Container(point, xHead, xHead, xHead, xHead);
 			yHead = new Container(point, yHead, yHead, yHead, yHead);
 			size=1;
-		} else {
+		}
+		else {
 			Container newC= new Container(point, null, null, null, null);
 			this.size+=1;
 
@@ -30,7 +31,8 @@ public class DataStructure implements DT {
 				xHead.setPrevX(newC);
 				newC.setNextX(xHead);
 				xHead= newC;
-			} else {
+			}
+			else {
 				Container pointer = xHead;
 				while(point.getX()>pointer.getNextX().getX() & !pointer.getNextX().equals(xHead))
 					pointer=pointer.getNextX();
