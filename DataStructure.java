@@ -64,19 +64,19 @@ public class DataStructure implements DT {
 	@Override
 	public Point[] getPointsInRangeRegAxis(int min, int max, Boolean axis) {
 		if(axis)
-			return getPointsInRangeXAxis(min , max);
+			return getPointsInRangeXAxis(min , max);//call the function for x
 		else
-			return getPointsInRangeYAxis(min , max);
+			return getPointsInRangeYAxis(min , max);//call the function for y
 	}
 
 	private Point[] getPointsInRangeXAxis(int min, int max)
 	{
-		Point[] arr = new Point[max-min+1];
+		Point[] arr = new Point[max-min+1];//ans
 		Container pointer = xHead;
-		while(pointer.getX()<min)
+		while(pointer.getX()<min)//if it's out of range skip it
 			pointer=pointer.getNextX();
 		int i = 0;
-		while(pointer.getX()<=max)
+		while(pointer.getX()<=max)//if it is in the range add it
 		{
 			arr[i]=pointer.getData();
 			i+=1;
@@ -87,12 +87,12 @@ public class DataStructure implements DT {
 
 	private Point[] getPointsInRangeYAxis(int min, int max)
 	{
-		Point[] arr = new Point[max-min+1];
+		Point[] arr = new Point[max-min+1];//ans
 		Container pointer = yHead;
-		while(pointer.getY()<min)
+		while(pointer.getY()<min)//if it's out of range skip it
 			pointer=pointer.getNextY();
 		int i = 0;
-		while(pointer.getY()<=max)
+		while(pointer.getY()<=max)//if it is in the range add it
 		{
 			arr[i]=pointer.getData();
 			i+=1;
@@ -102,7 +102,7 @@ public class DataStructure implements DT {
 	}
 	@Override
 	public Point[] getPointsInRangeOppAxis(int min, int max, Boolean axis) {
-		return getPointsInRangeRegAxis(min , max , !axis);
+		return getPointsInRangeRegAxis(min , max , !axis);//use the regaxis function for the opposite axis
 	}
 
 	@Override
