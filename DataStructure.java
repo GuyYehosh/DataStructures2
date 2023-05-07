@@ -61,14 +61,46 @@ public class DataStructure implements DT {
 
 	@Override
 	public Point[] getPointsInRangeRegAxis(int min, int max, Boolean axis) {
-		// TODO Auto-generated method stub
-		return null;
+		if(axis)
+			return getPointsInRangeXAxis(min , max);
+		else
+			return getPointsInRangeYAxis(min , max);
 	}
 
+	private Point[] getPointsInRangeXAxis(int min, int max)
+	{
+		Point[] arr = new Point[max-min+1];
+		Container pointer = xHead;
+		while(pointer.getX()<min)
+			pointer=pointer.getNextX();
+		int i = 0;
+		while(pointer.getX()<=max)
+		{
+			arr[i]=pointer.getData();
+			i+=1;
+		}
+
+		return arr;
+	}
+
+	private Point[] getPointsInRangeYAxis(int min, int max)
+	{
+		Point[] arr = new Point[max-min+1];
+		Container pointer = yHead;
+		while(pointer.getY()<min)
+			pointer=pointer.getNextY();
+		int i = 0;
+		while(pointer.getY()<=max)
+		{
+			arr[i]=pointer.getData();
+			i+=1;
+		}
+
+		return arr;
+	}
 	@Override
 	public Point[] getPointsInRangeOppAxis(int min, int max, Boolean axis) {
-		// TODO Auto-generated method stub
-		return null;
+		return getPointsInRangeRegAxis(min , max , !axis);
 	}
 
 	@Override
