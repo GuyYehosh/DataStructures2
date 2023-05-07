@@ -211,15 +211,147 @@ public class DataStructure implements DT {
 	@Override
 	public Point[] nearestPairInStrip(Container container, double width,
 									  Boolean axis) {
-		// TODO Auto-generated method stub
-		return null;
+		Point[] p1;
+		if(axis)
+			p1 = nearestPairInStrip(container, width, axis, container.getData().getX());
+		else
+			p1 = nearestPairInStrip(container, width, axis, container.getData().getY());
+		if(p1.length == 2)
+			return p1;
+		return new Point[0];
 	}
-
+	private double dis(Point pa, Point pb){
+		return Math.sqrt(Math.pow((pa.getX() - pb.getX()),2) + Math.pow((pa.getY() - pb.getY()),2));
+	}
+	private Point[] nearestPairInStrip(Container container, double width, boolean axis, double p){
+		int dis = 0;
+		Container temp = container;
+		if(axis) {
+			while (temp != null && temp.getX() >= p - width / 2)
+				temp = temp.getPrevX();
+			while (temp != null && temp.getX() <= p + width / 2)
+				temp = temp.getNextX();
+			while (temp != null && temp.getX() >= p - width / 2) {
+				temp = temp.getPrevX();
+				dis++;
+			}
+		}
+		else {
+			while (temp != null && temp.getY() >= p - width / 2)
+				temp = temp.getPrevY();
+			while (temp != null && temp.getY() <= p + width / 2)
+				temp = temp.getNextY();
+			while (temp != null && temp.getY() >= p - width / 2) {
+				temp = temp.getPrevY();
+				dis++;
+			}
+		}
+		Point[] points = new Point[dis];
+		for(int i = 0; i < dis; i++){
+			points[i] = temp.getData();
+			if(axis)
+				temp = temp.getNextX();
+			else
+				temp = temp.getNextY();
+		}
+		if(points.length <= 2) return points;
+		else{
+			Point[] p1 = nearestPairInStrip(container, width/2, axis, p + width/2);
+			Point[] p2 = nearestPairInStrip(container, width/2, axis, p - width/2);
+			return nearest2(p1, p2);
+		}
+	}
+	private Point[] nearest2(Point[] pa, Point[] pb){
+		// assume that length <= 2
+		double dis1 = 1000000000, dis2 = 1000000000;
+		if(pa.length == 2) dis1 = dis(pa[0], pa[1]);
+		if(pb.length == 2) dis2 = dis(pb[0], pb[1]);
+		double mind = dis2;
+		Point[] min = new Point[2];
+		if(dis1 < dis2 & pa.length == 2){
+			mind = dis1;
+			min[0] = pa[0];
+			min[1] = pa[1];
+		}
+		else if(pb.length == 2){
+			mind = dis2;
+			min[0] = pb[0];
+			min[1] = pb[1];
+		}
+		else{
+			if(pa.length == 1 & pb.length == 1 && pa[0].equals(pb[0]))
+				return pa;
+			if(pa.length == 0)
+				return pb;
+			else
+				return pa;
+		}
+		for (Point point1 : pa) {
+			for (Point point2 : pb) {
+				double dis = dis(point1, point2);
+				if(mind > dis & dis != 0) {
+					mind = Math.min(mind, dis);
+					min[0] = point1;
+					min[1] = point2;
+				}
+			}
+		}
+		return min;
+	}
 	@Override
 	public Point[] nearestPair() {
 		// TODO Auto-generated method stub
-		return null;
+		int dis = 0;
+		Container temp = this.xHead;
+		while (temp != null) {
+			temp = temp.getNextX();
+			dis++;
+		}
+		if (dis < 2)
+			return new Point[0];
+		else if (dis == 2) {
+			Point[] p = new Point[2];
+			p[0] = xHead.getData();
+			p[1] = xHead.getPrevX().getData();
+			return p;
+		} else {
+			boolean axis = getLargestAxis();
+			Container mid = getMedian(axis);
+			Point[] big, small;
+			if (axis) {
+				double width = xHead.getPrevX().getData().getX() - mid.getData().getX();
+				big = nearestPairInStrip(mid, width, axis, mid.getData().getX() + width / 2);
+				width = mid.getData().getX() - xHead.getData().getX();
+				small = nearestPairInStrip(mid, width, axis, mid.getData().getX() - width / 2);
+			} else {
+				double width = yHead.getPrevY().getData().getY() - mid.getData().getY();
+				big = nearestPairInStrip(mid, width, axis, mid.getData().getY() + width / 2);
+				width = mid.getData().getY() - yHead.getData().getY();
+				small = nearestPairInStrip(mid, width, axis, mid.getData().getY() - width / 2);
+			}
+			double dist;
+			Point[] closeA = new Point[2];
+			if (dis(big[0], big[1]) > dis(small[0], small[1])) {
+				dist = dis(small[0], small[1]);
+				closeA[0] = small[0];
+				closeA[1] = small[1];
+			} else {
+				dist = dis(big[0], big[1]);
+				closeA[0] = big[0];
+				closeA[1] = big[1];
+			}
+			Point[] closeB;
+			if(axis)
+				closeB = nearestPairInStrip(mid, 2 * dist, axis, mid.getX());
+			else
+				closeB = nearestPairInStrip(mid, 2 * dist, axis, mid.getY());
+			if (dis(closeB[0], closeB[1]) < dis(closeB[0], closeB[1]))
+				return closeA;
+			else
+				return closeB;
+		}
 	}
+
 
 
 	//TODO: add members, methods, etc.

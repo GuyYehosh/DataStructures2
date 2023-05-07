@@ -78,7 +78,7 @@
       <workItem from="1683395196758" duration="2000" />
       <workItem from="1683397703289" duration="1015000" />
       <workItem from="1683447646047" duration="1393000" />
-      <workItem from="1683484413690" duration="2461000" />
+      <workItem from="1683484413690" duration="5224000" />
     </task>
     <task id="LOCAL-00001" summary="theoretical">
       <created>1683397970533</created>
@@ -96,5 +96,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="theoretical" />
     <option name="LAST_COMMIT_MESSAGE" value="theoretical" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
