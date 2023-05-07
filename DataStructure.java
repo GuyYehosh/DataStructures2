@@ -17,7 +17,15 @@ public class DataStructure implements DT {
 	public void addPoint(Point point) {
 		if(xHead==null | yHead==null) {//if it's the first point
 			xHead = new Container(point, xHead, xHead, xHead, xHead);
+			xHead.setNextX(xHead);
+			xHead.setNextY(xHead);
+			xHead.setPrevX(xHead);
+			xHead.setPrevY(xHead);
 			yHead = new Container(point, yHead, yHead, yHead, yHead);
+			yHead.setNextX(yHead);
+			yHead.setNextY(yHead);
+			yHead.setPrevX(yHead);
+			yHead.setPrevY(yHead);
 			size=1;
 		}
 		else {
