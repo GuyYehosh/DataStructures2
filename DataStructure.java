@@ -15,7 +15,7 @@ public class DataStructure implements DT {
 
 	@Override
 	public void addPoint(Point point) {
-		if(xHead==null | yHead==null) {//if its the first point
+		if(xHead==null | yHead==null) {//if it's the first point
 			xHead = new Container(point, xHead, xHead, xHead, xHead);
 			yHead = new Container(point, yHead, yHead, yHead, yHead);
 			size=1;
@@ -25,7 +25,7 @@ public class DataStructure implements DT {
 			this.size+=1;
 
 			//handling x order list
-			if(point.getX() < xHead.getX()) {//if its the new min
+			if(point.getX() < xHead.getX()) {//if it's the new min
 				newC.setPrevX(xHead.getPrevX());
 				xHead.getPrevX().setNextX(newC);
 				xHead.setPrevX(newC);
@@ -43,7 +43,7 @@ public class DataStructure implements DT {
 			}
 
 			//handling y order list
-			if(point.getY() < yHead.getY()) {//checks if its the new min
+			if(point.getY() < yHead.getY()) {//checks if it's the new min
 				newC.setPrevY(yHead.getPrevY());
 				yHead.getPrevY().setNextY(newC);
 				yHead.setPrevY(newC);
@@ -107,7 +107,7 @@ public class DataStructure implements DT {
 
 	@Override
 	public double getDensity() {
-		return this.size/(xHead.getPrevX().getX()- xHead.getX())*(yHead.getPrevY().getY()- yHead.getY());//amount of points devidade by the range of x multiply by the range of y
+		return (double)this.size/(xHead.getPrevX().getX()- xHead.getX())*(yHead.getPrevY().getY()- yHead.getY());//amount of points divided by the range of x multiply by the range of y
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class DataStructure implements DT {
 
 	@Override
 	public Boolean getLargestAxis() {
-		int xSize=xHead.getPrevX().getX() - xHead.getX() , ySize=yHead.getPrevY().getY()  - yHead.getY();//the difference between xmax and min and y max and min
+		int xSize=xHead.getPrevX().getX() - xHead.getX() , ySize=yHead.getPrevY().getY()  - yHead.getY();//the difference between x max and min and y max and min
 		return xSize > ySize;
 	}
 
