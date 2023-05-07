@@ -1,11 +1,11 @@
 
 public class DataStructure implements DT {
 
-	private Container xHead;
+	private Container xHead;//min for x
 
-	private Container yHead;
+	private Container yHead;//min for y
 
-	private int size;
+	private int size;//how many points
 
 
 	//////////////// DON'T DELETE THIS CONSTRUCTOR ////////////////
@@ -15,17 +15,17 @@ public class DataStructure implements DT {
 
 	@Override
 	public void addPoint(Point point) {
-		if(xHead==null | yHead==null) {
+		if(xHead==null | yHead==null) {//if its the first point
 			xHead = new Container(point, xHead, xHead, xHead, xHead);
 			yHead = new Container(point, yHead, yHead, yHead, yHead);
 			size=1;
 		}
 		else {
-			Container newC= new Container(point, null, null, null, null);
+			Container newC= new Container(point, null, null, null, null);//the new point
 			this.size+=1;
 
 			//handling x order list
-			if(point.getX() < xHead.getX()) {
+			if(point.getX() < xHead.getX()) {//if its the new min
 				newC.setPrevX(xHead.getPrevX());
 				xHead.getPrevX().setNextX(newC);
 				xHead.setPrevX(newC);
@@ -34,7 +34,7 @@ public class DataStructure implements DT {
 			}
 			else {
 				Container pointer = xHead;
-				while(point.getX()>pointer.getNextX().getX() & !pointer.getNextX().equals(xHead))
+				while(point.getX()>pointer.getNextX().getX() & !pointer.getNextX().equals(xHead))//move to the right place for the new point
 					pointer=pointer.getNextX();
 				newC.setPrevX(pointer);
 				newC.setNextX(pointer.getNextX());
@@ -43,7 +43,7 @@ public class DataStructure implements DT {
 			}
 
 			//handling y order list
-			if(point.getY() < yHead.getY()) {
+			if(point.getY() < yHead.getY()) {//checks if its the new min
 				newC.setPrevY(yHead.getPrevY());
 				yHead.getPrevY().setNextY(newC);
 				yHead.setPrevY(newC);
@@ -51,7 +51,7 @@ public class DataStructure implements DT {
 				yHead= newC;
 			} else {
 				Container pointer = yHead;
-				while(point.getY()>pointer.getNextY().getY() & !pointer.getNextY().equals(yHead))
+				while(point.getY()>pointer.getNextY().getY() & !pointer.getNextY().equals(yHead))//move to the right place for the new point
 					pointer=pointer.getNextY();
 				newC.setPrevY(pointer);
 				newC.setNextY(pointer.getNextY());
@@ -107,14 +107,14 @@ public class DataStructure implements DT {
 
 	@Override
 	public double getDensity() {
-		return this.size/(xHead.getPrevX().getX()- xHead.getX())*(yHead.getPrevY().getY()- yHead.getY());
+		return this.size/(xHead.getPrevX().getX()- xHead.getX())*(yHead.getPrevY().getY()- yHead.getY());//amount of points devidade by the range of x multiply by the range of y
 	}
 
 	@Override
 	public void narrowRange(int min, int max, Boolean axis) {
 		if(axis)
 		{
-			while (xHead.getX()< min)
+			while (xHead.getX()< min)//if the current min is too small make the next one min
 			{
 				xHead.getNextX().setPrevX(xHead.getPrevX());
 				xHead.getPrevX().setNextX(xHead.getNextX());
@@ -126,7 +126,7 @@ public class DataStructure implements DT {
 				size--;
 			}
 			Container pointer = xHead.getPrevX();
-			while (pointer.getX() > max)
+			while (pointer.getX() > max)//if the biggest point is too big get it out
 			{
 				pointer.getNextX().setPrevX(pointer.getPrevX());
 				pointer.getPrevX().setNextX(pointer.getNextX());
@@ -136,7 +136,7 @@ public class DataStructure implements DT {
 			}
 		}
 		else {
-			while (yHead.getY()< min)
+			while (yHead.getY()< min)//if the current min is too small make the next one min
 			{
 				yHead.getNextY().setPrevY(yHead.getPrevY());
 				yHead.getPrevY().setNextY(yHead.getNextY());
@@ -148,7 +148,7 @@ public class DataStructure implements DT {
 				size--;
 			}
 			Container pointer = xHead.getPrevX();
-			while (pointer.getX() > max)
+			while (pointer.getX() > max)//if the biggest point is too big get it out
 			{
 				pointer.getNextY().setPrevY(pointer.getPrevY());
 				pointer.getPrevY().setNextY(pointer.getNextY());
@@ -161,24 +161,24 @@ public class DataStructure implements DT {
 
 	@Override
 	public Boolean getLargestAxis() {
-		int xSize=xHead.getPrevX().getX() - xHead.getX() , ySize=yHead.getPrevY().getY()  - yHead.getY();
+		int xSize=xHead.getPrevX().getX() - xHead.getX() , ySize=yHead.getPrevY().getY()  - yHead.getY();//the difference between xmax and min and y max and min
 		return xSize > ySize;
 	}
 
 	@Override
 	public Container getMedian(Boolean axis) {
-		Container pointer = xHead;
-		int toMove = size / 2;
-		if(size%2 == 0)
+		Container pointer = xHead;//the ans
+		int toMove = size / 2;// calculate where is the middle
+		if(size%2 == 0)//check if there are even or odd number of points
 			toMove--;
 		if(axis)
 		{
-			for(int i = toMove; i > 0; i--)
+			for(int i = toMove; i > 0; i--)//move to the right point
 				pointer = pointer.getNextX();
 		}
 		else {
-			pointer = yHead;
-			for(int i = toMove; i > 0; i--)
+			pointer = yHead;//the ans
+			for(int i = toMove; i > 0; i--)//move to the right point
 				pointer = pointer.getNextY();
 		}
 		return pointer;
