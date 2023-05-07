@@ -79,7 +79,7 @@ public class DataStructure implements DT {
 
 	private Point[] getPointsInRangeXAxis(int min, int max)
 	{
-		Point[] arr = new Point[max-min+1];//ans
+		Point[] arr = new Point[max-min+1];//temp
 		Container pointer = xHead;
 		while(pointer.getX()<min)//if it's out of range skip it
 			pointer=pointer.getNextX();
@@ -87,10 +87,18 @@ public class DataStructure implements DT {
 		while(pointer.getX()<=max)//if it is in the range add it
 		{
 			arr[i]=pointer.getData();
+			pointer = pointer.getNextX();
 			i+=1;
 		}
+		Point[] ans = new Point[i];
+		i--;
+		while(i>=0)
+		{
+			ans[i] = arr[i];
+			i--;
+		}
 
-		return arr;
+		return ans;
 	}
 
 	private Point[] getPointsInRangeYAxis(int min, int max)
@@ -103,10 +111,18 @@ public class DataStructure implements DT {
 		while(pointer.getY()<=max)//if it is in the range add it
 		{
 			arr[i]=pointer.getData();
+			pointer = pointer.getNextY();
 			i+=1;
 		}
+		Point[] ans = new Point[i];
+		i--;
+		while(i>=0)
+		{
+			ans[i] = arr[i];
+			i--;
+		}
 
-		return arr;
+		return ans;
 	}
 	@Override
 	public Point[] getPointsInRangeOppAxis(int min, int max, Boolean axis) {
