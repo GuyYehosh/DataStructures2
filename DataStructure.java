@@ -301,15 +301,9 @@ public class DataStructure implements DT {
 	@Override
 	public Point[] nearestPair() {
 		// TODO Auto-generated method stub
-		int dis = 0;
-		Container temp = this.xHead;
-		while (temp != null) {
-			temp = temp.getNextX();
-			dis++;
-		}
-		if (dis < 2)
+		if (size < 2)
 			return new Point[0];
-		else if (dis == 2) {
+		else if (size == 2) {
 			Point[] p = new Point[2];
 			p[0] = xHead.getData();
 			p[1] = xHead.getPrevX().getData();
